@@ -36,6 +36,8 @@ chmod +x wsinstall.sh
 curl -O https://github.com/mirror2008/wsinstall/raw/main/wsinstall.sh
 chmod +x wsinstall.sh
 ./wsinstall.sh
+
+---
 ⚠️ 请使用 root 权限运行脚本，否则可能无法安装依赖或执行安装。
 
 🧩 脚本说明
