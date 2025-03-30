@@ -27,6 +27,13 @@
 ## 🚀 使用方法
 
 ### 一键运行命令（推荐）
+### 国内服务器请使用这个:
+```bash
+wget https://gitee.com/yanda2008/wsinstall/raw/main/wsinstall.sh -O wsinstall.sh
+chmod +x wsinstall.sh
+./wsinstall.sh
+```
+### 海外服务器请使用这个:
 
 ```bash
 wget https://github.com/mirror2008/wsinstall/raw/main/wsinstall.sh -O wsinstall.sh
@@ -35,6 +42,15 @@ chmod +x wsinstall.sh
 ```
 
 或者使用 `curl`：
+### 国内服务器请使用这个:
+
+```bash
+curl -O https://gitee.com/yanda2008/wsinstall/raw/main/wsinstall.sh
+chmod +x wsinstall.sh
+./wsinstall.sh
+```
+
+### 海外服务器请使用这个:
 
 ```bash
 curl -O https://github.com/mirror2008/wsinstall/raw/main/wsinstall.sh
