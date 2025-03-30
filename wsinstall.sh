@@ -15,8 +15,7 @@ fi
 echo "正在检测 curl 是否安装..."
 if ! command -v curl > /dev/null 2>&1; then
     echo "未检测到 curl，尝试安装中..."
-    
-    # 获取操作系统
+
     OS=""
     if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -38,7 +37,6 @@ if ! command -v curl > /dev/null 2>&1; then
             apk add curl && INSTALL_SUCCESS=true
             ;;
         *)
-            # 系统未知，尝试常见包管理器
             echo "未知系统，尝试使用通用方式安装 curl..."
             if command -v apt >/dev/null; then apt update && apt install -y curl && INSTALL_SUCCESS=true; fi
             if command -v yum >/dev/null && [ "$INSTALL_SUCCESS" = false ]; then yum install -y curl && INSTALL_SUCCESS=true; fi
@@ -62,7 +60,6 @@ else
     curl -O https://gitlab.com/bin456789/reinstall/-/raw/main/reinstall.sh || wget -O reinstall.sh https://gitlab.com/bin456789/reinstall/-/raw/main/reinstall.sh
 fi
 
-# 设置权限
 chmod 777 reinstall.sh
 
 # 选择系统版本
@@ -106,17 +103,35 @@ if [ -z "$SYS_PASSWORD" ]; then
     exit 1
 fi
 
+# 用户输入远程桌面端口号
+read -p "请输入远程桌面端口号（默认3389，直接按 Enter 使用默认）: " RDP_PORT
+if [ -z "$RDP_PORT" ]; then
+    RDP_PORT=3389
+fi
+
 # 显示安装信息确认
 echo ""
 echo "即将安装的系统如下："
 echo "系统版本: $SYS_NAME"
 echo "账号: Administrator"
 echo "密码: $SYS_PASSWORD"
-echo "远程端口: 3389"
+echo "远程端口: $RDP_PORT"
 read -p "请确认无误后按 Enter 开始安装..."
 
-# 开始执行安装命令
+# 执行安装命令
 bash reinstall.sh windows \
     --image-name "$SYS_NAME" \
     --iso "$ISO_URL" \
-    --password "$SYS_PASSWORD"
+    --password "$SYS_PASSWORD" \
+    --rdp-port "$RDP_PORT"
+
+# 安装结果提示并自动重启
+if [ $? -eq 0 ]; then
+    echo ""
+    echo "✅ 初步安装已完毕，10 秒后将自动重启以继续系统安装..."
+    sleep 10
+    reboot
+else
+    echo "❌ reinstall.sh 执行失败，请检查上方输出信息排查错误"
+    exit 1
+fi
