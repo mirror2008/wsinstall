@@ -75,7 +75,7 @@ echo "提示：安装的系统默认为【标准带桌面体验版】"
 read -p "请输入选项数字 (1-5): " SYS_OPTION
 
 case "$SYS_OPTION" in
-    1) SYS_NAME="Windows Server 2012 SERVERSTANDARD"
+    1) SYS_NAME="Windows Server 2012 R2 SERVERSTANDARD"
        ISO_URL="https://download.microsoft.com/download/D/6/7/D675380B-0028-46B3-B47F-A0646E859F76/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_ZH-CN-IR3_SSS_X64FREE_ZH-CN_DV9.ISO"
        ;;
     2) SYS_NAME="Windows Server 2016 SERVERSTANDARD"
