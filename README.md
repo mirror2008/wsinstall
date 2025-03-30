@@ -33,10 +33,6 @@ wget https://github.com/mirror2008/wsinstall/raw/main/wsinstall.sh -O wsinstall.
 chmod +x wsinstall.sh
 ./wsinstall.sh
 或者使用 curl：
-
-bash
-复制
-编辑
 curl -O https://github.com/mirror2008/wsinstall/raw/main/wsinstall.sh
 chmod +x wsinstall.sh
 ./wsinstall.sh
