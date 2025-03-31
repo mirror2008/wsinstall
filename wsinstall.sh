@@ -8,22 +8,22 @@ if [ -z "$IPV4_CHECK" ]; then
     echo "🌐 检测结果：您的服务器为纯 IPv6 环境"
     echo "为确保后续正常联网，请先为该机器添加 IPv4 网络"
     echo ""
-    read -p "👉 按下 Enter 开始安装 WARP 以添加 IPv4 网络（跳转至 menu.sh 脚本）..." _
+    read -p "👉 按下 Enter 开始安装 WARP 以添加 IPv4 网络（跳转至 WARP脚本）..." _
 
     echo ""
-    echo "正在下载 WARP 安装脚本 menu.sh..."
-    curl -sSL https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -o menu.sh || {
-        echo "❌ 无法下载 menu.sh，退出"
+    echo "正在下载 WARP 安装脚本 "
+    apt install -y curl && bash <(curl -Ls https://raw.githubusercontent.com/Lynn-Becky/v6_only/main/v4.sh) || {
+        echo "❌ 无法下载 WARP脚本，退出"
         exit 1
     }
 
-    chmod +x menu.sh
+    chmod +x v4.sh
     echo "✅ 下载完成，接下来请自行手动选择菜单项安装 WARP IPv4"
-    echo "建议选择：3（双栈）→ 1（内核）→ 1（全局）→ 1（免费账户）→ 1（IPv4优先）"
+    echo "建议选择：2（使用Warp服务(全局)）→ 2（中文语言）→ 2（非全局）→ 1（免费账户）→ 2（IPv6优先）"
     echo ""
 
     # 运行 WARP 安装脚本，让用户手动选择
-    bash ./menu.sh
+    bash ./v4.sh
 
     echo ""
     echo "✅ WARP 脚本已退出，等待 5 秒后重新检测网络状态..."
