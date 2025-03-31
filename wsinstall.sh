@@ -79,10 +79,10 @@ else
     echo "⚠️ 无法连接 Google，判定为国内机器"
 fi
 
-# 检测是否安装 curl（再次保险）
+# 检测 curl 是否存在
 echo "正在检测 curl 是否安装..."
 if ! command -v curl > /dev/null 2>&1; then
-    echo "❌ curl 未安装，请检查 WARP 安装过程是否成功"
+    echo "❌ curl 未安装，请检查上方 WARP 安装是否成功"
     exit 1
 else
     echo "✅ curl 已安装"
@@ -96,7 +96,7 @@ else
     curl -O https://gitlab.com/bin456789/reinstall/-/raw/main/reinstall.sh || wget -O reinstall.sh https://gitlab.com/bin456789/reinstall/-/raw/main/reinstall.sh
 fi
 
-chmod 777 reinstall.sh
+chmod +x reinstall.sh
 
 # 选择系统版本
 echo ""
