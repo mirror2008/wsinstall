@@ -90,7 +90,6 @@ chmod 777 reinstall.sh
 # 选择系统版本
 echo ""
 echo "请选择需要安装的系统："
-echo "0. Windows Server 2008 R2"
 echo "1. Windows Server 2012"
 echo "2. Windows Server 2016"
 echo "3. Windows Server 2019"
@@ -101,9 +100,6 @@ echo "提示：安装的系统默认为【标准带桌面体验版】"
 read -p "请输入选项数字 (0-5): " SYS_OPTION
 
 case "$SYS_OPTION" in
-    0) SYS_NAME="Windows Server 2008 R2 SERVERENTERPRISEIA64"
-       ISO_URL="https://download.microsoft.com/download/d/7/e/d7e49421-6d66-4656-9d16-1de8fe8acc7b/7601.17514.101119-1850_ia64fre_serverenterpriseia64_eval_en-us-GRMSIAiEVAL_EN_DVD.iso"
-       ;;
     1) SYS_NAME="Windows Server 2012 R2 SERVERSTANDARD"
        ISO_URL="https://download.microsoft.com/download/D/6/7/D675380B-0028-46B3-B47F-A0646E859F76/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_ZH-CN-IR3_SSS_X64FREE_ZH-CN_DV9.ISO"
        ;;
