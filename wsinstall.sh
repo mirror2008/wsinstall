@@ -15,7 +15,50 @@ if [ -z "$IPV4_CHECK" ]; then
     echo -e "\033[1;36m👉 选择 2（使用Warp服务(全局)）→ 2（中文语言）→ 2（非全局）→ 1（免费账户）→ 2（IPv6优先）\033[0m"
     echo ""
 
-    apt install -y curl && bash <(curl -Ls https://raw.githubusercontent.com/Lynn-Becky/v6_only/main/v4.sh) || {
+    # 智能检测并安装 curl
+    if ! command -v curl > /dev/null 2>&1; then
+        echo "🔧 未检测到 curl，尝试自动安装..."
+        OS=""
+        if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            OS=$ID
+        elif [ -f /etc/redhat-release ]; then
+            OS="centos"
+        fi
+
+        INSTALL_SUCCESS=false
+        case "$OS" in
+            debian|ubuntu)
+                apt update && apt install -y curl && INSTALL_SUCCESS=true
+                ;;
+            centos|rhel|rocky|almalinux)
+                yum install -y curl && INSTALL_SUCCESS=true
+                ;;
+            alpine)
+                apk add curl && INSTALL_SUCCESS=true
+                ;;
+            arch)
+                pacman -Sy --noconfirm curl && INSTALL_SUCCESS=true
+                ;;
+            *)
+                echo "⚠️ 未知系统，尝试通用方式安装 curl..."
+                if command -v apt >/dev/null; then apt update && apt install -y curl && INSTALL_SUCCESS=true; fi
+                if command -v yum >/dev/null && [ "$INSTALL_SUCCESS" = false ]; then yum install -y curl && INSTALL_SUCCESS=true; fi
+                if command -v apk >/dev/null && [ "$INSTALL_SUCCESS" = false ]; then apk add curl && INSTALL_SUCCESS=true; fi
+                if command -v pacman >/dev/null && [ "$INSTALL_SUCCESS" = false ]; then pacman -Sy --noconfirm curl && INSTALL_SUCCESS=true; fi
+                ;;
+        esac
+
+        if [ "$INSTALL_SUCCESS" = false ]; then
+            echo "❌ 无法安装 curl，请手动安装后重试"
+            exit 1
+        fi
+    else
+        echo "✅ curl 已安装"
+    fi
+
+    # 执行 v4.sh 脚本添加 IPv4
+    bash <(curl -Ls https://raw.githubusercontent.com/Lynn-Becky/v6_only/main/v4.sh) || {
         echo "❌ 无法下载或执行 WARP 脚本，退出"
         exit 1
     }
@@ -36,43 +79,11 @@ else
     echo "⚠️ 无法连接 Google，判定为国内机器"
 fi
 
-# 检测是否安装 curl
+# 检测是否安装 curl（再次保险）
 echo "正在检测 curl 是否安装..."
 if ! command -v curl > /dev/null 2>&1; then
-    echo "未检测到 curl，尝试安装中..."
-
-    OS=""
-    if [ -f /etc/os-release ]; then
-        . /etc/os-release
-        OS=$ID
-    elif [ -f /etc/redhat-release ]; then
-        OS="centos"
-    fi
-
-    INSTALL_SUCCESS=false
-
-    case "$OS" in
-        debian|ubuntu)
-            apt update && apt install -y curl && INSTALL_SUCCESS=true
-            ;;
-        centos|rhel)
-            yum install -y curl && INSTALL_SUCCESS=true
-            ;;
-        alpine)
-            apk add curl && INSTALL_SUCCESS=true
-            ;;
-        *)
-            echo "未知系统，尝试使用通用方式安装 curl..."
-            if command -v apt >/dev/null; then apt update && apt install -y curl && INSTALL_SUCCESS=true; fi
-            if command -v yum >/dev/null && [ "$INSTALL_SUCCESS" = false ]; then yum install -y curl && INSTALL_SUCCESS=true; fi
-            if command -v apk >/dev/null && [ "$INSTALL_SUCCESS" = false ]; then apk add curl && INSTALL_SUCCESS=true; fi
-            ;;
-    esac
-
-    if [ "$INSTALL_SUCCESS" = false ]; then
-        echo "❌ 无法自动安装 curl，请手动安装 curl 后重新运行本程序"
-        exit 1
-    fi
+    echo "❌ curl 未安装，请检查 WARP 安装过程是否成功"
+    exit 1
 else
     echo "✅ curl 已安装"
 fi
@@ -90,6 +101,7 @@ chmod 777 reinstall.sh
 # 选择系统版本
 echo ""
 echo "请选择需要安装的系统："
+echo "0. Windows Server 2008 R2"
 echo "1. Windows Server 2012"
 echo "2. Windows Server 2016"
 echo "3. Windows Server 2019"
@@ -100,6 +112,9 @@ echo "提示：安装的系统默认为【标准带桌面体验版】"
 read -p "请输入选项数字 (0-5): " SYS_OPTION
 
 case "$SYS_OPTION" in
+    0) SYS_NAME="Windows Server 2008 R2 SERVERENTERPRISEIA64"
+       ISO_URL="https://download.microsoft.com/download/d/7/e/d7e49421-6d66-4656-9d16-1de8fe8acc7b/7601.17514.101119-1850_ia64fre_serverenterpriseia64_eval_en-us-GRMSIAiEVAL_EN_DVD.iso"
+       ;;
     1) SYS_NAME="Windows Server 2012 R2 SERVERSTANDARD"
        ISO_URL="https://download.microsoft.com/download/D/6/7/D675380B-0028-46B3-B47F-A0646E859F76/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_ZH-CN-IR3_SSS_X64FREE_ZH-CN_DV9.ISO"
        ;;
