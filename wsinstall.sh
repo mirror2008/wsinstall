@@ -1,5 +1,35 @@
 #!/bin/bash
 
+# 检查是否为纯 IPv6 环境（无 IPv4）
+echo "🔍 正在检查是否为纯 IPv6 网络..."
+IPV4_CHECK=$(ip -4 addr | grep inet | grep -v "127.0.0.1")
+
+if [ -z "$IPV4_CHECK" ]; then
+    echo "🌐 检测结果：您的服务器为纯 IPv6 环境"
+    echo "为确保后续正常联网，请先为该机器添加 IPv4 网络"
+    echo ""
+    read -p "👉 按下 Enter 开始安装 WARP 以添加 IPv4 网络（跳转至 menu.sh 脚本）..." _
+
+    echo ""
+    echo "正在下载 WARP 安装脚本 menu.sh..."
+    curl -sSL https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh -o menu.sh || {
+        echo "❌ 无法下载 menu.sh，退出"
+        exit 1
+    }
+
+    chmod +x menu.sh
+    echo "✅ 下载完成，接下来请自行手动选择菜单项安装 WARP IPv4"
+    echo "建议选择：3（双栈）→ 1（内核）→ 1（全局）→ 1（免费账户）→ 1（IPv4优先）"
+    echo ""
+
+    # 运行 WARP 安装脚本，让用户手动选择
+    bash ./menu.sh
+
+    echo ""
+    echo "✅ WARP 脚本已退出，等待 5 秒后重新检测网络状态..."
+    sleep 5
+fi
+
 # 判断是否为国外机器
 echo "正在检测网络状态..."
 ping -c 2 -W 2 google.com > /dev/null 2>&1
@@ -73,7 +103,7 @@ echo "4. Windows Server 2022"
 echo "5. Windows Server 2025"
 echo ""
 echo "提示：安装的系统默认为【标准带桌面体验版】"
-read -p "请输入选项数字 (1-5): " SYS_OPTION
+read -p "请输入选项数字 (0-5): " SYS_OPTION
 
 case "$SYS_OPTION" in
     0) SYS_NAME="Windows Server 2008 R2 SERVERENTERPRISEIA64"
@@ -120,7 +150,7 @@ echo "系统版本: $SYS_NAME"
 echo "账号: Administrator"
 echo "密码: $SYS_PASSWORD"
 echo "远程端口: $RDP_PORT"
-read -p "请确认无误后按 Enter 开始安装..."
+read -p "请确认无误后按 Enter 开始安装..." _
 
 # 执行安装命令
 bash reinstall.sh windows \
