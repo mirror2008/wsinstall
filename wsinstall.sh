@@ -93,7 +93,7 @@ echo "正在下载 reinstall.sh..."
 if [ "$LOCATION" = "foreign" ]; then
     curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh || wget -O reinstall.sh https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh
 else
-    curl -O https://gitlab.com/bin456789/reinstall/-/raw/main/reinstall.sh || wget -O reinstall.sh https://gitlab.com/bin456789/reinstall/-/raw/main/reinstall.sh
+    curl -O https://cnb.cool/bin456789/reinstall/-/git/raw/main/reinstall.sh || wget -O reinstall.sh https://cnb.cool/bin456789/reinstall/-/git/raw/main/reinstall.sh
 fi
 
 chmod +x reinstall.sh
