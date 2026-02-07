@@ -5,8 +5,8 @@
 
 - Windows Server 2012  
 - Windows Server 2016  
-- Windows Server 2019  
-- Windows Server 2022  
+- Windows Server 2019  (已对接高速微软云下载+正式版系统)
+- Windows Server 2022  (已对接高速微软云下载+正式版系统)
 - Windows Server 2025  
 
 本脚本基于 [reinstall 项目](https://github.com/bin456789/reinstall) 实现自动化重装流程。
@@ -67,7 +67,7 @@ chmod +x wsinstall.sh
 
 
 ⚠️ **请务必使用 观看 关于 Evaluation（测试版）激活方案**，否则可能导致系统测试许可证到期后每隔一小时重启！
-
+⚠️ **关于远程桌面账户被锁定的处理方法（重要）**，否则可能导致账户被锁定无法远程。
 ---
 
 ## 🧩 脚本说明
@@ -124,7 +124,33 @@ chmod +x wsinstall.sh
 💡 激活完成后系统就变成了正式版，**无限期使用无压力！**
 
 ---
+🔓 关于远程桌面账户被锁定的处理方法（重要）
 
+在系统重装完成并通过远程桌面（RDP）首次登录时，
+如果由于 多次输入错误密码，可能会触发 Windows 默认的 账户锁定策略，导致无法继续登录。
+
+✅ 永久解决方法（推荐）
+
+请通过 云服务商后台 / VNC / KVM 控制台 登录服务器，
+以管理员身份运行 PowerShell，执行以下命令：
+
+net accounts /lockoutthreshold:0
+
+📌 命令说明
+
+将 账户锁定阈值 设置为 0
+
+表示：永久关闭账户锁定机制
+
+之后即使多次远程登录失败，也不会再锁定账户
+
+等价于以下 GUI 操作：
+
+本地安全策略 → 账户策略 → 账户锁定策略 → 账户锁定阈值 = 0
+
+
+⚠️ 安全提醒：
+若服务器直接暴露在公网，建议配合 防火墙 IP 白名单 / 修改 RDP 端口 / VPN 使用，以防止暴力破解。
 ## 🧠 核心组件来源
 
 本脚本调用了开源项目：[bin456789/reinstall](https://github.com/bin456789/reinstall)
