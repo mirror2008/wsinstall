@@ -5,8 +5,8 @@
 
 - Windows Server 2012  
 - Windows Server 2016  
-- Windows Server 2019  (已对接高速微软云下载+正式版系统)
-- Windows Server 2022  (已对接高速微软云下载+正式版系统)
+- Windows Server 2019  
+- Windows Server 2022  
 - Windows Server 2025  
 
 本脚本基于 [reinstall 项目](https://github.com/bin456789/reinstall) 实现自动化重装流程。
@@ -24,11 +24,6 @@
 - 全自动、无人值守安装  
 
 ---
-
-🚀 **[七九网络免费网盘 · 提供高速下载源](https://pan.079idc.net)**  
-为系统镜像、ISO、备份文件提供稳定直连下载存储服务  
-适合 VPS 初始化 / 重装 / 批量部署场景  
-长期可用，不玩限速、不搞花活
 
 ☁️ **[七九网络 · 079IDC 高性价比BGP云服务器||正规企业||持证经营](https://079idc.net)**  
 BGP 多线接入，南北互通，国内外访问均衡  
