@@ -102,7 +102,7 @@ echo "请选择需要安装的系统："
 echo "1. Windows Server 2012"
 echo "2. Windows Server 2016"
 echo "3. Windows Server 2019"
-echo "4. Windows Server 2022"
+echo "4. Windows Server 2022(对接Cloudflare R2高速下载+正式版系统)"
 echo "5. Windows Server 2025"
 read -p "请输入选项数字 (1-5): " SYS_OPTION
 
@@ -117,7 +117,7 @@ case "$SYS_OPTION" in
        ISO_URL="https://software-static.download.prss.microsoft.com/dbazure/988969d5-f34g-4e03-ac9d-1f9786c66749/17763.3650.221105-1748.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_zh-cn.iso"
        ;;
     4) SYS_NAME="Windows Server 2022 SERVERSTANDARD"
-       ISO_URL="https://software-static.download.prss.microsoft.com/dbazure/988969d5-f34g-4e03-ac9d-1f9786c66756/20348.1787.230607-0640.fe_release_svc_refresh_SERVER_EVAL_x64FRE_zh-cn.iso"
+       ISO_URL="https://wsinstall.079idc.net/zh-cn_windows_server_2022_updated_sep_2024_x64_dvd_cab4e960.iso"
        ;;
     5) SYS_NAME="Windows Server 2025 SERVERSTANDARD"
        ISO_URL="https://software-static.download.prss.microsoft.com/dbazure/998969d5-f34g-4e03-ac9d-1f9786c66749/26100.32230.260111-0550.lt_release_svc_refresh_SERVER_EVAL_x64FRE_zh-cn.iso"
