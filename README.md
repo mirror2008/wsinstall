@@ -6,7 +6,7 @@
 - Windows Server 2012  
 - Windows Server 2016  
 - Windows Server 2019  
-- Windows Server 2022  
+- Windows Server 2022 (已接入全新高速CF R2节点下载+正式版系统) 
 - Windows Server 2025  
 
 本脚本基于 [reinstall 项目](https://github.com/bin456789/reinstall) 实现自动化重装流程。
